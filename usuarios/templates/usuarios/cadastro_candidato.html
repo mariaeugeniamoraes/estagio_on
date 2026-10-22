@@ -1,0 +1,41 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de estudante | EstágioON</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+    <header class="cabecalho">
+        <nav class="navegacao container">
+            <a href="{% url 'home' %}" class="logo">Estágio<span>ON</span></a>
+        </nav>
+    </header>
+
+    <main class="container cadastro-container">
+        <h1>Crie sua conta de estudante</h1>
+        <p>Encontre oportunidades para começar sua carreira.</p>
+
+        <form method="post" class="cadastro-form">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            {% for campo in form %}
+                <div class="campo-form">
+                    {{ campo.label_tag }}
+                    {{ campo }}
+                    {{ campo.errors }}
+                    {% if campo.help_text %}
+                        <small>{{ campo.help_text }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="botao">Criar conta</button>
+        </form>
+    </main>
+</body>
+</html>

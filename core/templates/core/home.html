@@ -1,0 +1,267 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EstágioON | Seu futuro começa aqui</title>
+
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <nav class="navegacao container">
+
+            <a href="{% url 'home' %}" class="logo">
+                Estágio<span>ON</span>
+            </a>
+
+            <div class="menu">
+                <a href="#vagas">Vagas</a>
+                <a href="#empresas">Para empresas</a>
+                <a href="#sobre">Sobre</a>
+            </div>
+
+            <div class="acoes">
+
+                {% if user.is_authenticated %}
+
+                    <span class="usuario-logado">
+                        Olá, {{ user.username }}!
+                    </span>
+
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+
+                        <button type="submit" class="entrar">
+                            Sair
+                        </button>
+                    </form>
+
+                {% else %}
+
+                    <a href="{% url 'login' %}" class="entrar">
+                        Entrar
+                    </a>
+
+                    <a href="{% url 'cadastro_candidato' %}" class="botao">
+                        Criar conta
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- SEÇÃO PRINCIPAL -->
+        <section class="hero">
+            <div class="container hero-conteudo">
+
+                <div class="hero-texto">
+
+                    <span class="etiqueta">
+                        Seu futuro começa aqui
+                    </span>
+
+                    <h1>
+                        Encontre o estágio ideal
+                        para <span>começar sua carreira.</span>
+                    </h1>
+
+                    <p>
+                        Conectamos estudantes a empresas que
+                        procuram novos talentos. Explore
+                        oportunidades e dê o próximo passo
+                        na sua carreira profissional.
+                    </p>
+
+                    <form action="#vagas" method="get" class="busca">
+
+                        <input
+                            type="search"
+                            name="q"
+                            placeholder="Qual área você procura?"
+                            aria-label="Pesquisar vagas"
+                        >
+
+                        <button type="submit">
+                            Buscar vagas
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="hero-ilustracao">
+
+                    <div class="ilustracao-icone">
+                        🎓
+                    </div>
+
+                    <h2>
+                        Seu talento merece oportunidades.
+                    </h2>
+
+                    <p>
+                        Aprenda. Conecte-se. Evolua.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- VAGAS RECENTES -->
+        <section class="vagas-section" id="vagas">
+            <div class="container">
+
+                <div class="secao-titulo">
+                    <div>
+
+                        <span class="etiqueta">
+                            Oportunidades
+                        </span>
+
+                        <h2>
+                            Vagas recentes
+                        </h2>
+
+                        <p>
+                            Descubra oportunidades para iniciar
+                            sua trajetória profissional.
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="vagas-grid">
+
+                    {% for vaga in vagas_recentes %}
+
+                        <article class="vaga-card">
+
+                            <div class="vaga-topo">
+
+                                <div class="vaga-icone">
+                                    💼
+                                </div>
+
+                                <span class="modalidade">
+                                    {{ vaga.get_modalidade_display }}
+                                </span>
+
+                            </div>
+
+                            <h3>
+                                {{ vaga.titulo }}
+                            </h3>
+
+                            <p class="empresa">
+                                {{ vaga.empresa.nome_empresa }}
+                            </p>
+
+                            <p class="localizacao">
+                                📍 {{ vaga.cidade }}
+                            </p>
+
+                            <div class="vaga-rodape">
+
+                                <strong>
+                                    R$ {{ vaga.bolsa_auxilio|floatformat:2 }}
+                                </strong>
+
+                                <span class="ver-vaga">
+                                    Ver vaga →
+                                </span>
+
+                            </div>
+
+                        </article>
+
+                    {% empty %}
+
+                        <p>
+                            Ainda não existem vagas disponíveis.
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ÁREA PARA EMPRESAS -->
+        <section class="empresas-section" id="empresas">
+            <div class="container empresas-conteudo">
+
+                <div>
+
+                    <h2>
+                        Sua empresa procura novos talentos?
+                    </h2>
+
+                    <p>
+                        Divulgue oportunidades de estágio
+                        e conecte-se a estudantes preparados
+                        para crescer profissionalmente.
+                    </p>
+
+                </div>
+
+                <a href="{% url 'cadastro_empresa' %}"
+                   class="botao botao-claro">
+
+                    Sou uma empresa
+
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- SOBRE O ESTÁGIOON -->
+        <section class="sobre-section" id="sobre">
+            <div class="container">
+
+                <h2>
+                    Conectando talentos e oportunidades
+                </h2>
+
+                <p>
+                    O EstágioON aproxima estudantes e empresas,
+                    tornando mais simples a busca pelo primeiro
+                    passo no mercado de trabalho.
+                </p>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- RODAPÉ -->
+    <footer>
+        <div class="container">
+
+            <p>
+                © 2026 EstágioON. Todos os direitos reservados.
+            </p>
+
+        </div>
+    </footer>
+
+</body>
+</html>

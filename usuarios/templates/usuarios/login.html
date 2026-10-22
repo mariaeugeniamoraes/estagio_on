@@ -1,0 +1,50 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar | EstágioON</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+    <header class="cabecalho">
+        <nav class="navegacao container">
+            <a href="{% url 'home' %}" class="logo">
+                Estágio<span>ON</span>
+            </a>
+        </nav>
+    </header>
+
+    <main class="container cadastro-container">
+        <h1>Bem-vindo de volta!</h1>
+        <p>Entre na sua conta para continuar sua jornada.</p>
+
+        <form method="post" class="cadastro-form">
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            {% for campo in form %}
+                <div class="campo-form">
+                    {{ campo.label_tag }}
+                    {{ campo }}
+                    {{ campo.errors }}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="botao">
+                Entrar na minha conta
+            </button>
+
+            <p class="login-rodape">
+                Ainda não tem uma conta?
+                <a href="{% url 'cadastro_candidato' %}">
+                    Cadastre-se
+                </a>
+            </p>
+        </form>
+    </main>
+</body>
+</html>
