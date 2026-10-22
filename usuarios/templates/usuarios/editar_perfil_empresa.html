@@ -1,0 +1,133 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Perfil da Empresa | EstágioON</title>
+
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <nav class="navegacao container">
+
+            <a href="{% url 'home' %}" class="logo">
+                Estágio<span>ON</span>
+            </a>
+
+            <div class="acoes">
+
+                <a href="{% url 'perfil_empresa' %}" class="entrar">
+                    Voltar ao perfil
+                </a>
+
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+
+                    <button type="submit" class="entrar">
+                        Sair
+                    </button>
+                </form>
+
+            </div>
+
+        </nav>
+    </header>
+
+    <!-- FORMULÁRIO DE EDIÇÃO -->
+    <main class="perfil-container container">
+
+        <div class="perfil-cabecalho">
+
+            <div class="perfil-avatar">
+                ✏️
+            </div>
+
+            <h1>Editar perfil da empresa</h1>
+
+            <p>
+                Mantenha as informações da sua empresa atualizadas.
+            </p>
+
+        </div>
+
+        <div class="perfil-card">
+
+            <h2>Informações empresariais</h2>
+
+            <form method="post" class="editar-perfil-form">
+
+                {% csrf_token %}
+
+                <!-- ERROS GERAIS DO FORMULÁRIO -->
+                {{ form.non_field_errors }}
+
+                <div class="editar-perfil-grid">
+
+                    {% for campo in form %}
+
+                        <div class="campo-form">
+
+                            <label for="{{ campo.id_for_label }}">
+                                {{ campo.label }}
+                            </label>
+
+                            {{ campo }}
+
+                            <!-- ERROS DO CAMPO -->
+                            {% if campo.errors %}
+
+                                <div class="erro-campo">
+                                    {{ campo.errors }}
+                                </div>
+
+                            {% endif %}
+
+                            {% if campo.help_text %}
+                                <small>{{ campo.help_text }}</small>
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="editar-perfil-acoes">
+
+                    <a href="{% url 'perfil_empresa' %}"
+                       class="botao-cancelar">
+                        Cancelar
+                    </a>
+
+                    <button type="submit" class="botao">
+                        Salvar alterações
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <div class="container">
+            <p>
+                © 2026 EstágioON. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

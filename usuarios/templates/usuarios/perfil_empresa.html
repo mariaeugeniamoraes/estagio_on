@@ -1,0 +1,146 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Perfil da Empresa | EstágioON</title>
+
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <nav class="navegacao container">
+
+            <a href="{% url 'home' %}" class="logo">
+                Estágio<span>ON</span>
+            </a>
+
+            <div class="acoes">
+
+                <a href="{% url 'home' %}" class="entrar">
+                    Voltar ao início
+                </a>
+
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+
+                    <button type="submit" class="entrar">
+                        Sair
+                    </button>
+                </form>
+
+            </div>
+
+        </nav>
+    </header>
+
+    <!-- PERFIL DA EMPRESA -->
+    <main class="perfil-container container">
+
+        <div class="perfil-cabecalho">
+
+            <div class="perfil-avatar">
+                🏢
+            </div>
+
+            <h1>{{ empresa.nome_empresa }}</h1>
+
+            <p>Perfil empresarial</p>
+
+        </div>
+
+        <div class="perfil-card">
+
+            <!-- TÍTULO E BOTÃO DE EDIÇÃO -->
+            <div class="perfil-card-topo">
+
+                <h2>Informações da empresa</h2>
+
+                <a href="{% url 'editar_perfil_empresa' %}"
+                   class="botao">
+                    ✏️ Editar perfil
+                </a>
+
+            </div>
+
+            <!-- INFORMAÇÕES CADASTRADAS -->
+            <div class="perfil-grid">
+
+                <div class="perfil-campo">
+                    <span>Nome da empresa</span>
+                    <strong>{{ empresa.nome_empresa }}</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>CNPJ</span>
+                    <strong>{{ empresa.cnpj }}</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>E-mail corporativo</span>
+                    <strong>{{ request.user.email }}</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>Cidade</span>
+                    <strong>{{ empresa.cidade }}</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>Site oficial</span>
+
+                    {% if empresa.site %}
+
+                        <a href="{{ empresa.site }}"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            {{ empresa.site }}
+                        </a>
+
+                    {% else %}
+
+                        <strong>Não informado</strong>
+
+                    {% endif %}
+                </div>
+
+                <div class="perfil-campo">
+                    <span>Nome de usuário</span>
+                    <strong>{{ request.user.username }}</strong>
+                </div>
+
+            </div>
+
+            <!-- DESCRIÇÃO DA EMPRESA -->
+            <div class="perfil-descricao">
+
+                <h3>Sobre a empresa</h3>
+
+                <p>
+                    {{ empresa.descricao|default:"Nenhuma descrição cadastrada."|linebreaksbr }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <div class="container">
+            <p>
+                © 2026 EstágioON. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

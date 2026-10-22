@@ -6,6 +6,10 @@ from django.db import transaction
 from .models import Usuario, Candidato, Empresa
 
 
+# ==========================================
+# CADASTRO DO ESTUDANTE
+# ==========================================
+
 class CadastroCandidatoForm(UserCreationForm):
 
     nome_completo = forms.CharField(
@@ -70,12 +74,14 @@ class CadastroCandidatoForm(UserCreationForm):
 
     @transaction.atomic
     def save(self, commit=True):
+
         if not commit:
             raise ValueError(
                 'O cadastro deve ser salvo com commit=True.'
             )
 
         usuario = super().save(commit=False)
+
         usuario.email = self.cleaned_data['email']
         usuario.tipo_usuario = 'candidato'
         usuario.save()
@@ -92,6 +98,10 @@ class CadastroCandidatoForm(UserCreationForm):
 
         return usuario
 
+
+# ==========================================
+# CADASTRO DA EMPRESA
+# ==========================================
 
 class CadastroEmpresaForm(UserCreationForm):
 
@@ -167,12 +177,14 @@ class CadastroEmpresaForm(UserCreationForm):
 
     @transaction.atomic
     def save(self, commit=True):
+
         if not commit:
             raise ValueError(
                 'O cadastro deve ser salvo com commit=True.'
             )
 
         usuario = super().save(commit=False)
+
         usuario.email = self.cleaned_data['email']
         usuario.tipo_usuario = 'empresa'
         usuario.save()
@@ -187,3 +199,133 @@ class CadastroEmpresaForm(UserCreationForm):
         )
 
         return usuario
+
+
+# ==========================================
+# EDITAR PERFIL DO ESTUDANTE
+# ==========================================
+
+class EditarPerfilCandidatoForm(forms.ModelForm):
+
+    email = forms.EmailField(
+        label='E-mail',
+        required=True
+    )
+
+    class Meta:
+        model = Candidato
+
+        fields = [
+            'nome_completo',
+            'curso',
+            'faculdade',
+            'periodo',
+            'telefone',
+            'cidade'
+        ]
+
+        labels = {
+            'nome_completo': 'Nome completo',
+            'curso': 'Curso',
+            'faculdade': 'Faculdade',
+            'periodo': 'Período',
+            'telefone': 'Telefone',
+            'cidade': 'Cidade',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.instance.pk:
+            self.fields['email'].initial = self.instance.usuario.email
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].strip().lower()
+
+        if Usuario.objects.filter(
+            email__iexact=email
+        ).exclude(pk=self.instance.usuario_id).exists():
+            raise forms.ValidationError(
+                'Este e-mail já está cadastrado.'
+            )
+
+        return email
+
+    @transaction.atomic
+    def save(self, commit=True):
+
+        candidato = super().save(commit=False)
+
+        candidato.usuario.email = self.cleaned_data['email']
+
+        if commit:
+            candidato.usuario.save()
+            candidato.save()
+            self.save_m2m()
+
+        return candidato
+
+
+# ==========================================
+# EDITAR PERFIL DA EMPRESA
+# ==========================================
+
+class EditarPerfilEmpresaForm(forms.ModelForm):
+
+    email = forms.EmailField(
+        label='E-mail corporativo',
+        required=True
+    )
+
+    class Meta:
+        model = Empresa
+
+        fields = [
+            'nome_empresa',
+            'descricao',
+            'cidade',
+            'site'
+        ]
+
+        labels = {
+            'nome_empresa': 'Nome da empresa',
+            'descricao': 'Descrição da empresa',
+            'cidade': 'Cidade',
+            'site': 'Site oficial',
+        }
+
+        widgets = {
+            'descricao': forms.Textarea(attrs={'rows': 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.instance.pk:
+            self.fields['email'].initial = self.instance.usuario.email
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].strip().lower()
+
+        if Usuario.objects.filter(
+            email__iexact=email
+        ).exclude(pk=self.instance.usuario_id).exists():
+            raise forms.ValidationError(
+                'Este e-mail já está cadastrado.'
+            )
+
+        return email
+
+    @transaction.atomic
+    def save(self, commit=True):
+
+        empresa = super().save(commit=False)
+
+        empresa.usuario.email = self.cleaned_data['email']
+
+        if commit:
+            empresa.usuario.save()
+            empresa.save()
+            self.save_m2m()
+
+        return empresa

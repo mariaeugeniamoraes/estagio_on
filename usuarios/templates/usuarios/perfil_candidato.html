@@ -1,0 +1,113 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meu Perfil | EstágioON</title>
+
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <nav class="navegacao container">
+
+            <a href="{% url 'home' %}" class="logo">
+                Estágio<span>ON</span>
+            </a>
+
+            <div class="acoes">
+                <a href="{% url 'home' %}" class="entrar">
+                    Voltar ao início
+                </a>
+
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="entrar">
+                        Sair
+                    </button>
+                </form>
+            </div>
+
+        </nav>
+    </header>
+
+    <main class="perfil-container container">
+
+        <div class="perfil-cabecalho">
+            <div class="perfil-avatar">
+                🎓
+            </div>
+
+            <h1>{{ candidato.nome_completo }}</h1>
+            <p>Perfil do estudante</p>
+        </div>
+
+        <div class="perfil-card">
+
+    <div class="perfil-card-topo">
+
+        <h2>Minhas informações</h2>
+
+        <a href="{% url 'editar_perfil_candidato' %}"
+           class="botao">
+            ✏️ Editar perfil
+        </a>
+
+    </div>
+
+            <div class="perfil-grid">
+
+                <div class="perfil-campo">
+                    <span>Nome completo</span>
+                    <strong>{{ candidato.nome_completo }}</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>E-mail</span>
+                    <strong>{{ request.user.email }}</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>Curso</span>
+                    <strong>{{ candidato.curso }}</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>Faculdade</span>
+                    <strong>{{ candidato.faculdade }}</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>Período</span>
+                    <strong>{{ candidato.periodo }}º período</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>Telefone</span>
+                    <strong>{{ candidato.telefone|default:"Não informado" }}</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>Cidade</span>
+                    <strong>{{ candidato.cidade }}</strong>
+                </div>
+
+                <div class="perfil-campo">
+                    <span>Nome de usuário</span>
+                    <strong>{{ request.user.username }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

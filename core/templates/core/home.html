@@ -36,6 +36,20 @@
                         Olá, {{ user.username }}!
                     </span>
 
+                    {% if user.tipo_usuario == 'candidato' %}
+
+    <a href="{% url 'perfil_candidato' %}" class="entrar">
+        Meu perfil
+    </a>
+
+{% elif user.tipo_usuario == 'empresa' %}
+
+    <a href="{% url 'perfil_empresa' %}" class="entrar">
+        Meu perfil
+    </a>
+
+{% endif %}
+
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
 

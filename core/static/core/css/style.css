@@ -519,3 +519,219 @@ footer {
     color: #2563eb;
 }
 
+
+/* PERFIL DO ESTUDANTE */
+
+.perfil-container {
+    max-width: 1000px;
+    margin: 60px auto;
+}
+
+.perfil-cabecalho {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.perfil-avatar {
+    width: 90px;
+    height: 90px;
+    background: #dbeafe;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    margin: 0 auto 20px;
+}
+
+.perfil-cabecalho h1 {
+    font-size: 30px;
+    color: #163b65;
+    margin-bottom: 8px;
+}
+
+.perfil-cabecalho p {
+    color: #64748b;
+}
+
+.perfil-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.perfil-card h2 {
+    color: #163b65;
+    font-size: 22px;
+    margin-bottom: 30px;
+}
+
+.perfil-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.perfil-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.perfil-campo span {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.perfil-campo strong {
+    font-size: 16px;
+    color: #1e293b;
+}
+
+@media (max-width: 650px) {
+    .perfil-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .perfil-card {
+        padding: 24px;
+    }
+}
+
+
+/* EDITAR PERFIL DO ESTUDANTE */
+
+.editar-perfil-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.editar-perfil-form .campo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.editar-perfil-form .campo-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.editar-perfil-form input,
+.editar-perfil-form select,
+.editar-perfil-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    background: #ffffff;
+    color: #1e293b;
+}
+
+.editar-perfil-form input:focus,
+.editar-perfil-form select:focus,
+.editar-perfil-form textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.editar-perfil-acoes {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    margin-top: 35px;
+}
+
+.botao-cancelar {
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 600;
+    background: #f1f5f9;
+}
+
+.botao-cancelar:hover {
+    background: #e2e8f0;
+}
+
+.erro-campo {
+    color: #dc2626;
+    font-size: 13px;
+}
+
+@media (max-width: 650px) {
+    .editar-perfil-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .editar-perfil-acoes {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .editar-perfil-acoes .botao,
+    .botao-cancelar {
+        text-align: center;
+    }
+}
+
+.perfil-card-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.perfil-card-topo h2 {
+    margin-bottom: 0;
+}
+
+@media (max-width: 650px) {
+    .perfil-card-topo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+/* PERFIL DA EMPRESA */
+
+.perfil-descricao {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.perfil-descricao h3 {
+    font-size: 18px;
+    color: #163b65;
+    margin-bottom: 15px;
+}
+
+.perfil-descricao p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #475569;
+}
+
+.perfil-campo a {
+    color: #2563eb;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.perfil-campo a:hover {
+    text-decoration: underline;
+}
+
