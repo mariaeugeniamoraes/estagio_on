@@ -1,0 +1,109 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Publicar Vaga | EstágioON</title>
+
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <nav class="navegacao container">
+
+            <a href="{% url 'home' %}" class="logo">
+                Estágio<span>ON</span>
+            </a>
+
+            <div class="acoes">
+                <a href="{% url 'perfil_empresa' %}" class="entrar">
+                    Voltar ao perfil
+                </a>
+            </div>
+
+        </nav>
+    </header>
+
+    <main class="perfil-container container">
+
+        <div class="perfil-cabecalho">
+
+            <div class="perfil-avatar">💼</div>
+
+            <h1>Publicar nova vaga</h1>
+
+            <p>
+                Encontre novos talentos para sua empresa.
+            </p>
+
+        </div>
+
+        <div class="perfil-card">
+
+            <h2>Informações da vaga</h2>
+
+            <form method="post" class="editar-perfil-form">
+
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+
+                <div class="editar-perfil-grid">
+
+                    {% for campo in form %}
+
+                        <div class="campo-form">
+
+                            <label for="{{ campo.id_for_label }}">
+                                {{ campo.label }}
+                            </label>
+
+                            {{ campo }}
+
+                            {% if campo.errors %}
+                                <div class="erro-campo">
+                                    {{ campo.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="editar-perfil-acoes">
+
+                    <a href="{% url 'perfil_empresa' %}"
+                       class="botao-cancelar">
+                        Cancelar
+                    </a>
+
+                    <button type="submit" class="botao">
+                        Publicar vaga
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                © 2026 EstágioON. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

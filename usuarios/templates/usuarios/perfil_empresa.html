@@ -61,14 +61,25 @@
             <!-- TÍTULO E BOTÃO DE EDIÇÃO -->
             <div class="perfil-card-topo">
 
-                <h2>Informações da empresa</h2>
+    <h2>Informações da empresa</h2>
 
-                <a href="{% url 'editar_perfil_empresa' %}"
-                   class="botao">
-                    ✏️ Editar perfil
-                </a>
+    <div class="perfil-botoes">
 
-            </div>
+        <a href="{% url 'publicar_vaga' %}" class="botao">
+            + Publicar vaga
+        </a>
+
+        <a href="{% url 'editar_perfil_empresa' %}" class="botao">
+            ✏️ Editar perfil
+        </a>
+
+        <a href="{% url 'minhas_vagas' %}" class="botao">
+    📋 Minhas vagas
+</a>
+
+    </div>
+
+</div>
 
             <!-- INFORMAÇÕES CADASTRADAS -->
             <div class="perfil-grid">

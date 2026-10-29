@@ -1,0 +1,111 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Vagas | EstágioON</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+
+    <header class="cabecalho">
+        <nav class="navegacao container">
+            <a href="{% url 'home' %}" class="logo">
+                Estágio<span>ON</span>
+            </a>
+
+            <div class="acoes">
+                <a href="{% url 'perfil_empresa' %}" class="entrar">
+                    Meu perfil
+                </a>
+                <a href="{% url 'publicar_vaga' %}" class="botao">
+                    + Nova vaga
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="perfil-container container">
+
+        <div class="perfil-cabecalho">
+            <div class="perfil-avatar">💼</div>
+            <h1>Minhas vagas</h1>
+            <p>Gerencie as oportunidades da sua empresa.</p>
+        </div>
+
+        <div class="minhas-vagas-grid">
+
+            {% for vaga in vagas %}
+
+                <article class="vaga-card">
+
+                    <div class="vaga-topo">
+                        <div class="vaga-icone">💼</div>
+
+                        <span class="modalidade">
+                            {{ vaga.get_modalidade_display }}
+                        </span>
+                    </div>
+
+                    <h3>{{ vaga.titulo }}</h3>
+
+                    <p class="localizacao">
+                        📍 {{ vaga.cidade }}
+                    </p>
+
+                    <p>
+                        Carga horária:
+                        {{ vaga.carga_horaria }} horas semanais
+                    </p>
+
+                    <p>
+                        Status:
+                        <strong>{{ vaga.get_status_display }}</strong>
+                    </p>
+
+                    <div class="vaga-rodape">
+                        <strong>
+                            R$ {{ vaga.bolsa_auxilio|floatformat:2 }}
+                        </strong>
+                    </div>
+
+                    <div class="vaga-acoes">
+
+    <a href="{% url 'editar_vaga' vaga.id %}" class="botao">
+        ✏️ Editar
+    </a>
+
+    <a href="{% url 'excluir_vaga' vaga.id %}" class="botao-excluir">
+        🗑️ Excluir
+    </a>
+
+</div>
+
+                </article>
+
+            {% empty %}
+
+                <div class="perfil-card">
+                    <h2>Nenhuma vaga publicada</h2>
+
+                    <p>
+                        Sua empresa ainda não publicou
+                        oportunidades de estágio.
+                    </p>
+
+                    <a href="{% url 'publicar_vaga' %}" class="botao">
+                        Publicar primeira vaga
+                    </a>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</body>
+</html>
